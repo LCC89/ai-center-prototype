@@ -184,10 +184,6 @@ body {
   top:0px;
   width:1475px;
   height:425px;
-  -ms-overflow-x:hidden;
-  overflow-x:hidden;
-  -ms-overflow-y:hidden;
-  overflow-y:hidden;
   background-color:#f3f4f6;
   background-image:none;
   border-radius:0px;
