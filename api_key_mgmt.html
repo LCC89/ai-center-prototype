@@ -896,22 +896,26 @@
 
       // Model dropdown functions
       function toggleModelDropdown(event) {
-        if (event) {
-          event.stopPropagation();
-        }
+        event.stopPropagation();
+        event.preventDefault();
         
         const dropdown = document.getElementById('modelDropdown');
         const trigger = document.querySelector('.model-select-trigger');
         
-        if (dropdown.classList.contains('active')) {
-          dropdown.classList.remove('active');
-        } else {
+        // Toggle active class
+        const isActive = dropdown.classList.contains('active');
+        
+        // Close all dropdowns first
+        document.querySelectorAll('.model-dropdown').forEach(d => d.classList.remove('active'));
+        
+        if (!isActive) {
           // Calculate position relative to viewport
           const rect = trigger.getBoundingClientRect();
           dropdown.style.left = rect.left + 'px';
           dropdown.style.top = (rect.bottom + 4) + 'px';
           dropdown.style.width = rect.width + 'px';
           dropdown.classList.add('active');
+          console.log('Dropdown opened at:', rect.left, rect.bottom);
         }
       }
 
@@ -926,8 +930,7 @@
       document.addEventListener('click', function(e) {
         const container = document.getElementById('modelSelectContainer');
         const dropdown = document.getElementById('modelDropdown');
-        // Check if click is inside container or dropdown
-        if (!container.contains(e.target) && !dropdown.contains(e.target)) {
+        if (container && dropdown && !container.contains(e.target) && !dropdown.contains(e.target)) {
           dropdown.classList.remove('active');
         }
       });
