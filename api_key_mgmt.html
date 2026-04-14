@@ -501,20 +501,17 @@
       }
 
       .model-dropdown {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        margin-top: 4px;
+        position: fixed;
         background: #fff;
         border: 1px solid var(--line);
         border-radius: 10px;
         padding: 8px;
         max-height: 320px;
         overflow-y: auto;
-        z-index: 9999;
+        z-index: 99999;
         display: none;
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        min-width: 200px;
       }
 
       .model-dropdown.active {
@@ -899,7 +896,19 @@
 
       // Model dropdown functions
       function toggleModelDropdown() {
-        document.getElementById('modelDropdown').classList.toggle('active');
+        const dropdown = document.getElementById('modelDropdown');
+        const trigger = document.querySelector('.model-select-trigger');
+        
+        if (dropdown.classList.contains('active')) {
+          dropdown.classList.remove('active');
+        } else {
+          // Calculate position relative to viewport
+          const rect = trigger.getBoundingClientRect();
+          dropdown.style.left = rect.left + 'px';
+          dropdown.style.top = (rect.bottom + 4) + 'px';
+          dropdown.style.width = rect.width + 'px';
+          dropdown.classList.add('active');
+        }
       }
 
       function updateSelectedModels() {
