@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>API参考 - AI中枢</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --page-bg: #f5f7fb;
+        --panel-bg: #ffffff;
+        --text-main: #111827;
+        --text-sub: #667085;
+        --text-light: #98a2b3;
+        --line: #e4e7ec;
+        --brand: #4f7cff;
+        --brand-soft: #eef4ff;
+        --code-bg: #1e1e1e;
+        --code-text: #d4d4d4;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Inter", "PingFang SC", "Microsoft YaHei", sans-serif;
+        color: var(--text-main);
+        background: var(--page-bg);
+        display: flex;
+      }
+
+      /* Sidebar Styles */
+      .sidebar {
+        width: 220px;
+        background: #fff;
+        border-right: 1px solid var(--line);
+        min-height: 100vh;
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .sidebar-header {
+        padding: 16px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .sidebar-logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--brand);
+      }
+
+      .sidebar-logo-icon {
+        width: 32px;
+        height: 32px;
+        background: var(--brand);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 14px;
+      }
+
+      .sidebar-nav {
+        flex: 1;
+        padding: 12px 0;
+        overflow-y: auto;
+      }
+
+      .menu-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 16px;
+        margin: 2px 12px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 14px;
+        color: var(--text-sub);
+        transition: all 0.2s ease;
+        text-decoration: none;
+      }
+
+      .menu-item:hover {
+        background: #f9fafb;
+        color: var(--text-main);
+      }
+
+      .menu-item.active {
+        background: var(--brand-soft);
+        color: var(--brand);
+        font-weight: 500;
+      }
+
+      .menu-item-icon {
+        width: 18px;
+        height: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .menu-item-arrow {
+        margin-left: auto;
+        width: 16px;
+        height: 16px;
+        transition: transform 0.2s ease;
+      }
+
+      .menu-item.expanded .menu-item-arrow {
+        transform: rotate(180deg);
+      }
+
+      .submenu {
+        display: none;
+        padding: 4px 0;
+      }
+
+      .submenu.expanded {
+        display: block;
+      }
+
+      .submenu-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 16px 8px 44px;
+        margin: 2px 12px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 13px;
+        color: var(--text-sub);
+        transition: all 0.2s ease;
+        text-decoration: none;
+      }
+
+      .submenu-item:hover {
+        background: #f9fafb;
+        color: var(--text-main);
+      }
+
+      .submenu-item.active {
+        background: var(--brand-soft);
+        color: var(--brand);
+        font-weight: 500;
+      }
+
+      .content {
+        flex: 1;
+        padding: 24px 28px 40px;
+        overflow: auto;
+      }
+
+      .page-header {
+        margin-bottom: 24px;
+      }
+
+      .page-title {
+        margin: 0;
+        font-size: 24px;
+        font-weight: 700;
+        color: var(--text-main);
+      }
+
+      /* API Documentation Layout */
+      .api-container {
+        display: flex;
+        gap: 24px;
+        height: calc(100vh - 200px);
+      }
+
+      .api-sidebar {
+        width: 240px;
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 20px;
+        overflow-y: auto;
+        flex-shrink: 0;
+      }
+
+      .api-category {
+        margin-bottom: 24px;
+      }
+
+      .api-category:last-child {
+        margin-bottom: 0;
+      }
+
+      .api-category-title {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--text-main);
+        margin: 0 0 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .api-category-icon {
+        width: 20px;
+        height: 20px;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        font-weight: 700;
+      }
+
+      .api-category-icon.text {
+        background: var(--brand-soft);
+        color: var(--brand);
+      }
+
+      .api-category-icon.image {
+        background: #ecfdf3;
+        color: #12b76a;
+      }
+
+      .api-category-icon.voice {
+        background: #fef3f2;
+        color: #f04438;
+      }
+
+      .api-category-icon.video {
+        background: #fffaeb;
+        color: #f79009;
+      }
+
+      .api-endpoint-list {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .api-endpoint {
+        padding: 8px 12px;
+        border-radius: 8px;
+        font-size: 13px;
+        color: var(--text-sub);
+        cursor: pointer;
+        transition: all 0.2s ease;
+        border: none;
+        background: transparent;
+        text-align: left;
+        font-family: inherit;
+      }
+
+      .api-endpoint:hover {
+        background: #f9fafb;
+        color: var(--text-main);
+      }
+
+      .api-endpoint.active {
+        background: var(--brand-soft);
+        color: var(--brand);
+        font-weight: 500;
+      }
+
+      .api-content {
+        flex: 1;
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .api-content-header {
+        padding: 20px 24px;
+        border-bottom: 1px solid var(--line);
+        background: #fafbfc;
+      }
+
+      .api-method {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 700;
+        margin-right: 12px;
+      }
+
+      .api-method.post {
+        background: #ecfdf3;
+        color: #12b76a;
+      }
+
+      .api-method.get {
+        background: #eef4ff;
+        color: var(--brand);
+      }
+
+      .api-path {
+        font-family: 'Monaco', 'Menlo', monospace;
+        font-size: 14px;
+        color: var(--text-main);
+      }
+
+      .api-content-body {
+        flex: 1;
+        overflow-y: auto;
+        padding: 24px;
+      }
+
+      .api-section {
+        margin-bottom: 32px;
+      }
+
+      .api-section:last-child {
+        margin-bottom: 0;
+      }
+
+      .api-section-title {
+        font-size: 16px;
+        font-weight: 700;
+        margin: 0 0 16px;
+        color: var(--text-main);
+      }
+
+      .api-description {
+        font-size: 14px;
+        color: var(--text-sub);
+        line-height: 1.6;
+        margin: 0 0 16px;
+      }
+
+      .code-block {
+        background: var(--code-bg);
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 16px;
+      }
+
+      .code-header {
+        background: #2d2d2d;
+        padding: 10px 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .code-language {
+        font-size: 12px;
+        color: #9ca3af;
+        font-weight: 500;
+      }
+
+      .code-copy {
+        background: transparent;
+        border: none;
+        color: #9ca3af;
+        font-size: 12px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        transition: color 0.2s ease;
+      }
+
+      .code-copy:hover {
+        color: #fff;
+      }
+
+      .code-content {
+        padding: 16px;
+        overflow-x: auto;
+      }
+
+      .code-content pre {
+        margin: 0;
+        font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
+        font-size: 13px;
+        line-height: 1.6;
+        color: var(--code-text);
+      }
+
+      .code-content code {
+        font-family: inherit;
+      }
+
+      .param-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+      }
+
+      .param-table th {
+        text-align: left;
+        padding: 12px 16px;
+        background: #f9fafb;
+        color: var(--text-sub);
+        font-weight: 600;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .param-table td {
+        padding: 12px 16px;
+        border-bottom: 1px solid var(--line);
+        color: var(--text-main);
+      }
+
+      .param-table tr:last-child td {
+        border-bottom: none;
+      }
+
+      .param-type {
+        display: inline-block;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 11px;
+        font-weight: 500;
+        background: #f3f4f6;
+        color: var(--text-sub);
+      }
+
+      .param-required {
+        color: #f04438;
+        font-weight: 600;
+      }
+
+      .param-optional {
+        color: var(--text-light);
+      }
+
+      @media (max-width: 1100px) {
+        .content {
+          padding: 16px;
+        }
+
+        .api-container {
+          flex-direction: column;
+          height: auto;
+        }
+
+        .api-sidebar {
+          width: 100%;
+        }
+
+        .api-content {
+          min-height: 500px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <div class="sidebar-logo-icon">AI</div>
+          <span>AI中枢</span>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <!-- AI中枢管理 -->
+        <div class="menu-item" onclick="toggleMenu(this)">
+          <span class="menu-item-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="7"></rect>
+              <rect x="14" y="3" width="7" height="7"></rect>
+              <rect x="14" y="14" width="7" height="7"></rect>
+              <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+          </span>
+          <span>AI中枢管理</span>
+          <svg class="menu-item-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </div>
+        <div class="submenu">
+          <a href="#" class="submenu-item">用户权限管理</a>
+          <a href="#" class="submenu-item">角色菜单管理</a>
+        </div>
+
+        <!-- API key管理 -->
+        <a href="api_key_mgmt.html" class="menu-item">
+          <span class="menu-item-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path>
+            </svg>
+          </span>
+          <span>API key管理</span>
+        </a>
+
+        <!-- 模型管理 -->
+        <div class="menu-item expanded" onclick="toggleMenu(this)">
+          <span class="menu-item-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+              <path d="M2 17l10 5 10-5"></path>
+              <path d="M2 12l10 5 10-5"></path>
+            </svg>
+          </span>
+          <span>模型管理</span>
+          <svg class="menu-item-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </div>
+        <div class="submenu expanded">
+          <a href="model_mgmt.html" class="submenu-item">模型广场</a>
+          <a href="api_reference.html" class="submenu-item active">API参考</a>
+        </div>
+
+        <!-- 配额管理 -->
+        <a href="#" class="menu-item">
+          <span class="menu-item-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="8" r="7"></circle>
+              <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+            </svg>
+          </span>
+          <span>配额管理</span>
+        </a>
+
+        <!-- 统计管理 -->
+        <a href="#" class="menu-item">
+          <span class="menu-item-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="20" x2="18" y2="10"></line>
+              <line x1="12" y1="20" x2="12" y2="4"></line>
+              <line x1="6" y1="20" x2="6" y2="14"></line>
+            </svg>
+          </span>
+          <span>统计管理</span>
+        </a>
+
+        <!-- 算力调度 -->
+        <a href="#" class="menu-item">
+          <span class="menu-item-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+            </svg>
+          </span>
+          <span>算力调度</span>
+        </a>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <section class="page-header">
+        <h1 class="page-title">API参考</h1>
+      </section>
+
+      <div class="api-container">
+        <aside class="api-sidebar">
+          <div class="api-category">
+            <h3 class="api-category-title">
+              <span class="api-category-icon text">T</span>
+              文本
+            </h3>
+            <div class="api-endpoint-list">
+              <button class="api-endpoint active" data-endpoint="chat-completion">对话生成</button>
+              <button class="api-endpoint" data-endpoint="text-embedding">文本嵌入</button>
+              <button class="api-endpoint" data-endpoint="text-rerank">重排序</button>
+            </div>
+          </div>
+
+          <div class="api-category">
+            <h3 class="api-category-title">
+              <span class="api-category-icon image">I</span>
+              图像
+            </h3>
+            <div class="api-endpoint-list">
+              <button class="api-endpoint" data-endpoint="image-generation">图像生成</button>
+              <button class="api-endpoint" data-endpoint="image-edit">图像编辑</button>
+              <button class="api-endpoint" data-endpoint="image-recognition">图像识别</button>
+            </div>
+          </div>
+
+          <div class="api-category">
+            <h3 class="api-category-title">
+              <span class="api-category-icon voice">V</span>
+              语音
+            </h3>
+            <div class="api-endpoint-list">
+              <button class="api-endpoint" data-endpoint="speech-to-text">语音转文字</button>
+              <button class="api-endpoint" data-endpoint="text-to-speech">文字转语音</button>
+            </div>
+          </div>
+
+          <div class="api-category">
+            <h3 class="api-category-title">
+              <span class="api-category-icon video">M</span>
+              视频
+            </h3>
+            <div class="api-endpoint-list">
+              <button class="api-endpoint" data-endpoint="video-generation">视频生成</button>
+              <button class="api-endpoint" data-endpoint="video-analysis">视频分析</button>
+            </div>
+          </div>
+        </aside>
+
+        <div class="api-content">
+          <div class="api-content-header">
+            <span class="api-method post">POST</span>
+            <span class="api-path">/v1/chat/completions</span>
+          </div>
+          <div class="api-content-body">
+            <div class="api-section">
+              <h3 class="api-section-title">接口说明</h3>
+              <p class="api-description">对话生成接口，支持多轮对话和流式响应。通过该接口可以与平台接入的各种大模型进行交互，支持设置系统提示词、温度参数、最大token数等。</p>
+            </div>
+
+            <div class="api-section">
+              <h3 class="api-section-title">请求示例</h3>
+              <div class="code-block">
+                <div class="code-header">
+                  <span class="code-language">curl</span>
+                  <button class="code-copy" onclick="copyCode(this)">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    复制
+                  </button>
+                </div>
+                <div class="code-content">
+                  <pre><code>curl https://api.aicenter.com/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -d '{
+    "model": "glm-5-edu",
+    "messages": [
+      {"role": "system", "content": "你是一个 helpful 的 AI 助手"},
+      {"role": "user", "content": "你好，请介绍一下自己"}
+    ],
+    "temperature": 0.7,
+    "max_tokens": 2000,
+    "stream": false
+  }'</code></pre>
+                </div>
+              </div>
+
+              <div class="code-block">
+                <div class="code-header">
+                  <span class="code-language">Python</span>
+                  <button class="code-copy" onclick="copyCode(this)">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    复制
+                  </button>
+                </div>
+                <div class="code-content">
+                  <pre><code>import requests
+
+response = requests.post(
+    "https://api.aicenter.com/v1/chat/completions",
+    headers={
+        "Content-Type": "application/json",
+        "Authorization": "Bearer YOUR_API_KEY"
+    },
+    json={
+        "model": "glm-5-edu",
+        "messages": [
+            {"role": "system", "content": "你是一个 helpful 的 AI 助手"},
+            {"role": "user", "content": "你好，请介绍一下自己"}
+        ],
+        "temperature": 0.7,
+        "max_tokens": 2000
+    }
+)
+
+print(response.json())</code></pre>
+                </div>
+              </div>
+            </div>
+
+            <div class="api-section">
+              <h3 class="api-section-title">请求参数</h3>
+              <table class="param-table">
+                <thead>
+                  <tr>
+                    <th>参数名</th>
+                    <th>类型</th>
+                    <th>必填</th>
+                    <th>说明</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>model</td>
+                    <td><span class="param-type">string</span></td>
+                    <td class="param-required">是</td>
+                    <td>模型ID，如 glm-5-edu、kimi-k2.5 等</td>
+                  </tr>
+                  <tr>
+                    <td>messages</td>
+                    <td><span class="param-type">array</span></td>
+                    <td class="param-required">是</td>
+                    <td>对话消息列表，包含 role 和 content</td>
+                  </tr>
+                  <tr>
+                    <td>temperature</td>
+                    <td><span class="param-type">number</span></td>
+                    <td class="param-optional">否</td>
+                    <td>采样温度，范围 0-2，默认 0.7</td>
+                  </tr>
+                  <tr>
+                    <td>max_tokens</td>
+                    <td><span class="param-type">integer</span></td>
+                    <td class="param-optional">否</td>
+                    <td>最大生成token数，默认 2000</td>
+                  </tr>
+                  <tr>
+                    <td>stream</td>
+                    <td><span class="param-type">boolean</span></td>
+                    <td class="param-optional">否</td>
+                    <td>是否使用流式响应，默认 false</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="api-section">
+              <h3 class="api-section-title">响应示例</h3>
+              <div class="code-block">
+                <div class="code-header">
+                  <span class="code-language">JSON</span>
+                  <button class="code-copy" onclick="copyCode(this)">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    复制
+                  </button>
+                </div>
+                <div class="code-content">
+                  <pre><code>{
+  "id": "chatcmpl-abc123",
+  "object": "chat.completion",
+  "created": 1677652288,
+  "model": "glm-5-edu",
+  "choices": [{
+    "index": 0,
+    "message": {
+      "role": "assistant",
+      "content": "你好！我是GLM-5教育版，一个专为教育场景优化的大语言模型。我可以帮助你解答问题、辅助教学、提供学习建议等。"
+    },
+    "finish_reason": "stop"
+  }],
+  "usage": {
+    "prompt_tokens": 25,
+    "completion_tokens": 50,
+    "total_tokens": 75
+  }
+}</code></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      // Sidebar menu toggle
+      function toggleMenu(element) {
+        element.classList.toggle('expanded');
+        const submenu = element.nextElementSibling;
+        if (submenu && submenu.classList.contains('submenu')) {
+          submenu.classList.toggle('expanded');
+        }
+      }
+
+      function copyCode(button) {
+        const codeBlock = button.closest('.code-block').querySelector('code');
+        const text = codeBlock.innerText;
+        navigator.clipboard.writeText(text).then(() => {
+          const originalText = button.innerHTML;
+          button.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> 已复制';
+          setTimeout(() => {
+            button.innerHTML = originalText;
+          }, 2000);
+        });
+      }
+
+      // Endpoint switching
+      document.querySelectorAll('.api-endpoint').forEach(endpoint => {
+        endpoint.addEventListener('click', function() {
+          document.querySelectorAll('.api-endpoint').forEach(e => e.classList.remove('active'));
+          this.classList.add('active');
+          // Here you would typically load different content based on the endpoint
+        });
+      });
+    </script>
+  </body>
+</html>
