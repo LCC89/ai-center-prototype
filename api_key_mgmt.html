@@ -383,10 +383,10 @@
 
       .modal {
         background: #fff;
-        border-radius: 12px;
+        border-radius: 20px;
         width: 90%;
         max-width: 480px;
-        overflow: hidden;
+        overflow: visible;
         transform: scale(0.95) translateY(20px);
         transition: all 0.3s ease;
       }
@@ -501,17 +501,20 @@
       }
 
       .model-dropdown {
-        position: fixed;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        margin-top: 4px;
         background: #fff;
         border: 1px solid var(--line);
         border-radius: 10px;
         padding: 8px;
         max-height: 320px;
         overflow-y: auto;
-        z-index: 99999;
+        z-index: 9999;
         display: none;
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-        min-width: 200px;
       }
 
       .model-dropdown.active {
@@ -833,9 +836,9 @@
           <div class="form-group">
             <label class="form-label">绑定大模型</label>
             <div class="model-select-container" id="modelSelectContainer">
-              <div class="model-select-trigger" onclick="console.log('Trigger clicked'); toggleModelDropdown(event);">
+              <div class="model-select-trigger" onclick="toggleModelDropdown()">
                 <span id="selectedModelsText">请选择模型</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" onclick="console.log('SVG clicked'); event.stopPropagation();">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <polyline points="6 9 12 15 18 9"></polyline>
                 </svg>
               </div>
@@ -895,28 +898,8 @@
       }
 
       // Model dropdown functions
-      function toggleModelDropdown(event) {
-        event.stopPropagation();
-        event.preventDefault();
-        
-        const dropdown = document.getElementById('modelDropdown');
-        const trigger = document.querySelector('.model-select-trigger');
-        
-        // Toggle active class
-        const isActive = dropdown.classList.contains('active');
-        
-        // Close all dropdowns first
-        document.querySelectorAll('.model-dropdown').forEach(d => d.classList.remove('active'));
-        
-        if (!isActive) {
-          // Calculate position relative to viewport
-          const rect = trigger.getBoundingClientRect();
-          dropdown.style.left = rect.left + 'px';
-          dropdown.style.top = (rect.bottom + 4) + 'px';
-          dropdown.style.width = rect.width + 'px';
-          dropdown.classList.add('active');
-          console.log('Dropdown opened at:', rect.left, rect.bottom);
-        }
+      function toggleModelDropdown() {
+        document.getElementById('modelDropdown').classList.toggle('active');
       }
 
       function updateSelectedModels() {
@@ -929,9 +912,8 @@
       // Close dropdown when clicking outside
       document.addEventListener('click', function(e) {
         const container = document.getElementById('modelSelectContainer');
-        const dropdown = document.getElementById('modelDropdown');
-        if (container && dropdown && !container.contains(e.target) && !dropdown.contains(e.target)) {
-          dropdown.classList.remove('active');
+        if (!container.contains(e.target)) {
+          document.getElementById('modelDropdown').classList.remove('active');
         }
       });
 
