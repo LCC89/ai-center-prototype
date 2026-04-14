@@ -494,6 +494,8 @@
         align-items: center;
         justify-content: space-between;
         transition: border-color 0.2s ease;
+        position: relative;
+        z-index: 200;
       }
 
       .model-select-trigger:hover {
@@ -748,7 +750,7 @@
               <td>admin</td>
               <td>
                 <div class="cell-actions">
-                  <button class="btn-action btn-edit" onclick="editKey('API key名称1')">编辑</button>
+                  <button class="btn-action btn-edit" onclick="editKey('API key名称1', '此处为描述文字', ['glm-5'])">编辑</button>
                   <button class="btn-action btn-delete" onclick="deleteKey('API key名称1')">删除</button>
                 </div>
               </td>
@@ -777,7 +779,7 @@
               <td>admin</td>
               <td>
                 <div class="cell-actions">
-                  <button class="btn-action btn-edit" onclick="editKey('API key名称2')">编辑</button>
+                  <button class="btn-action btn-edit" onclick="editKey('API key名称2', '此处为描述文字', ['glm-5', 'kimi-k25'])">编辑</button>
                   <button class="btn-action btn-delete" onclick="deleteKey('API key名称2')">删除</button>
                 </div>
               </td>
@@ -807,7 +809,7 @@
               <td>admin</td>
               <td>
                 <div class="cell-actions">
-                  <button class="btn-action btn-edit" onclick="editKey('API key名称3')">编辑</button>
+                  <button class="btn-action btn-edit" onclick="editKey('API key名称3', '此处为描述文字', ['glm-5', 'kimi-k25', 'deepseek-v32'])">编辑</button>
                   <button class="btn-action btn-delete" onclick="deleteKey('API key名称3')">删除</button>
                 </div>
               </td>
@@ -821,7 +823,7 @@
     <div class="modal-overlay" id="createModal">
       <div class="modal">
         <div class="modal-header">
-          <h3 class="modal-title">创建API Key</h3>
+          <h3 class="modal-title" id="modalTitle">创建API Key</h3>
           <button class="modal-close" onclick="closeModal()">&times;</button>
         </div>
         <div class="modal-body">
@@ -873,19 +875,44 @@
         </div>
         <div class="modal-footer">
           <button class="btn btn-secondary" onclick="closeModal()">取消</button>
-          <button class="btn btn-primary" onclick="createKey()">创建</button>
+          <button class="btn btn-primary" id="modalSubmitBtn" onclick="submitKey()">创建</button>
         </div>
       </div>
     </div>
 
     <script>
+      // Track current editing key
+      let editingKeyName = null;
+
       // Modal functions
       function openModal() {
+        editingKeyName = null;
+        document.getElementById('modalTitle').textContent = '创建API Key';
+        document.getElementById('modalSubmitBtn').textContent = '创建';
+        document.getElementById('createModal').classList.add('active');
+      }
+
+      function openEditModal(name, description, models) {
+        editingKeyName = name;
+        document.getElementById('modalTitle').textContent = '编辑API Key';
+        document.getElementById('modalSubmitBtn').textContent = '保存';
+        
+        // Fill form data
+        document.getElementById('keyName').value = name;
+        document.getElementById('keyDescription').value = description;
+        
+        // Clear and set model selection
+        document.querySelectorAll('.model-option input[type="checkbox"]').forEach(cb => {
+          cb.checked = models.includes(cb.value);
+        });
+        updateSelectedModels();
+        
         document.getElementById('createModal').classList.add('active');
       }
 
       function closeModal() {
         document.getElementById('createModal').classList.remove('active');
+        editingKeyName = null;
         // Clear form
         document.getElementById('keyName').value = '';
         document.getElementById('keyDescription').value = '';
@@ -917,7 +944,7 @@
         }
       });
 
-      function createKey() {
+      function submitKey() {
         const name = document.getElementById('keyName').value;
         const description = document.getElementById('keyDescription').value;
         const selectedModels = document.querySelectorAll('.model-option input[type="checkbox"]:checked');
@@ -931,7 +958,11 @@
           return;
         }
 
-        alert('API Key创建成功！');
+        if (editingKeyName) {
+          alert('API Key "' + name + '" 修改成功！');
+        } else {
+          alert('API Key创建成功！');
+        }
         closeModal();
       }
 
@@ -953,8 +984,8 @@
       }
 
       // Edit key function
-      function editKey(name) {
-        alert('编辑: ' + name);
+      function editKey(name, description, models) {
+        openEditModal(name, description, models);
       }
 
       // Delete key function
