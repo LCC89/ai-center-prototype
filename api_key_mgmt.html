@@ -386,10 +386,7 @@
         border-radius: 20px;
         width: 90%;
         max-width: 480px;
-        max-height: 90vh;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
+        overflow: visible;
         transform: scale(0.95) translateY(20px);
         transition: all 0.3s ease;
       }
@@ -434,8 +431,7 @@
 
       .modal-body {
         padding: 24px;
-        max-height: calc(90vh - 140px);
-        overflow-y: auto;
+        overflow: visible;
       }
 
       .form-group {
@@ -513,11 +509,11 @@
         border: 1px solid var(--line);
         border-radius: 10px;
         padding: 8px;
-        max-height: 240px;
+        max-height: 320px;
         overflow-y: auto;
-        z-index: 1000;
+        z-index: 9999;
         display: none;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
       }
 
       .model-dropdown.active {
