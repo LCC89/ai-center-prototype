@@ -575,34 +575,10 @@
           <div class="api-category">
             <h3 class="api-category-title">
               <span class="api-category-icon image">I</span>
-              图像
+              多模态
             </h3>
             <div class="api-endpoint-list">
-              <button class="api-endpoint" data-endpoint="image-generation">图像生成</button>
-              <button class="api-endpoint" data-endpoint="image-edit">图像编辑</button>
-              <button class="api-endpoint" data-endpoint="image-recognition">图像识别</button>
-            </div>
-          </div>
-
-          <div class="api-category">
-            <h3 class="api-category-title">
-              <span class="api-category-icon voice">V</span>
-              语音
-            </h3>
-            <div class="api-endpoint-list">
-              <button class="api-endpoint" data-endpoint="speech-to-text">语音转文字</button>
-              <button class="api-endpoint" data-endpoint="text-to-speech">文字转语音</button>
-            </div>
-          </div>
-
-          <div class="api-category">
-            <h3 class="api-category-title">
-              <span class="api-category-icon video">M</span>
-              视频
-            </h3>
-            <div class="api-endpoint-list">
-              <button class="api-endpoint" data-endpoint="video-generation">视频生成</button>
-              <button class="api-endpoint" data-endpoint="video-analysis">视频分析</button>
+              <button class="api-endpoint" data-endpoint="vision-chat">视觉对话</button>
             </div>
           </div>
         </aside>
@@ -619,7 +595,41 @@
             </div>
 
             <div class="api-section">
-              <h3 class="api-section-title">请求示例</h3>
+              <h3 class="api-section-title">可用模型</h3>
+              <table class="param-table">
+                <thead>
+                  <tr>
+                    <th>模型名称</th>
+                    <th>模型ID</th>
+                    <th>API URL</th>
+                    <th>上下文长度</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Qwen3-14B</td>
+                    <td><span class="param-type">Qwen/Qwen3-14B</span></td>
+                    <td>http://220.196.22.85:8000/v1</td>
+                    <td>128K tokens</td>
+                  </tr>
+                  <tr>
+                    <td>GLM-4.1V-9B-Thinking</td>
+                    <td><span class="param-type">ZhipuAI/GLM-4.1V-9B-Thinking</span></td>
+                    <td>http://220.196.22.85:8001/v1</td>
+                    <td>32K tokens</td>
+                  </tr>
+                  <tr>
+                    <td>DeepSeek-R1-Distill-Llama-70B</td>
+                    <td><span class="param-type">deepseek-ai/DeepSeek-R1-Distill-Llama-70B</span></td>
+                    <td>http://220.196.22.85:8002/v1</td>
+                    <td>128K tokens</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="api-section">
+              <h3 class="api-section-title">请求示例 (Qwen3-14B)</h3>
               <div class="code-block">
                 <div class="code-header">
                   <span class="code-language">curl</span>
@@ -632,11 +642,11 @@
                   </button>
                 </div>
                 <div class="code-content">
-                  <pre><code>curl https://api.aicenter.com/v1/chat/completions \
+                  <pre><code>curl http://220.196.22.85:8000/v1/chat/completions \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -d '{
-    "model": "glm-5-edu",
+    "model": "Qwen/Qwen3-14B",
     "messages": [
       {"role": "system", "content": "你是一个 helpful 的 AI 助手"},
       {"role": "user", "content": "你好，请介绍一下自己"}
@@ -663,13 +673,13 @@
                   <pre><code>import requests
 
 response = requests.post(
-    "https://api.aicenter.com/v1/chat/completions",
+    "http://220.196.22.85:8000/v1/chat/completions",
     headers={
         "Content-Type": "application/json",
         "Authorization": "Bearer YOUR_API_KEY"
     },
     json={
-        "model": "glm-5-edu",
+        "model": "Qwen/Qwen3-14B",
         "messages": [
             {"role": "system", "content": "你是一个 helpful 的 AI 助手"},
             {"role": "user", "content": "你好，请介绍一下自己"}
@@ -700,7 +710,7 @@ print(response.json())</code></pre>
                     <td>model</td>
                     <td><span class="param-type">string</span></td>
                     <td class="param-required">是</td>
-                    <td>模型ID，如 glm-5-edu、kimi-k2.5 等</td>
+                    <td>模型ID，如 Qwen/Qwen3-14B、ZhipuAI/GLM-4.1V-9B-Thinking 等</td>
                   </tr>
                   <tr>
                     <td>messages</td>
@@ -748,12 +758,12 @@ print(response.json())</code></pre>
   "id": "chatcmpl-abc123",
   "object": "chat.completion",
   "created": 1677652288,
-  "model": "glm-5-edu",
+  "model": "Qwen/Qwen3-14B",
   "choices": [{
     "index": 0,
     "message": {
       "role": "assistant",
-      "content": "你好！我是GLM-5教育版，一个专为教育场景优化的大语言模型。我可以帮助你解答问题、辅助教学、提供学习建议等。"
+      "content": "你好！我是Qwen3-14B，阿里云通义千问系列的语言模型。我可以帮助你解答问题、辅助教学、提供学习建议等。"
     },
     "finish_reason": "stop"
   }],
