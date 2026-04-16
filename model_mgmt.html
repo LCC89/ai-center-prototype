@@ -942,43 +942,6 @@
             document.getElementById('modalReleaseDate').textContent = data.releaseDate;
             document.getElementById('modalStatus').textContent = data.status;
 
-            // API info - hide empty fields
-            const apiUrlEl = document.getElementById('modalApiUrl');
-            const apiUrlRow = apiUrlEl.closest('.license-row');
-            if (data.apiUrl) {
-              apiUrlEl.textContent = data.apiUrl;
-              apiUrlRow.style.display = 'flex';
-            } else {
-              apiUrlRow.style.display = 'none';
-            }
-
-            const modelIdEl = document.getElementById('modalModelId');
-            const modelIdRow = modelIdEl.closest('.license-row');
-            if (data.modelId) {
-              modelIdEl.textContent = data.modelId;
-              modelIdRow.style.display = 'flex';
-            } else {
-              modelIdRow.style.display = 'none';
-            }
-
-            const endpointEl = document.getElementById('modalEndpoint');
-            const endpointRow = endpointEl.closest('.license-row');
-            if (data.endpoint) {
-              endpointEl.textContent = data.endpoint;
-              endpointRow.style.display = 'flex';
-            } else {
-              endpointRow.style.display = 'none';
-            }
-
-            const containerNameEl = document.getElementById('modalContainerName');
-            const containerRow = document.getElementById('modalContainerRow');
-            if (data.containerName) {
-              containerNameEl.textContent = data.containerName;
-              containerRow.style.display = 'flex';
-            } else {
-              containerRow.style.display = 'none';
-            }
-
             // License info - hide empty fields
             const licenseRegionEl = document.getElementById('modalLicenseRegion');
             const licenseRegionRow = licenseRegionEl.closest('.license-row');
