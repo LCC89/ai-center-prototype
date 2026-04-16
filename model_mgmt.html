@@ -760,46 +760,6 @@
             <span class="capability-tag">对话</span>
           </div>
         </article>
-
-        <article class="model-card" data-model="qwen3-embedding-8b" data-context="8">
-          <div class="model-card-header">
-            <div class="model-icon-placeholder" style="background: linear-gradient(135deg, #13c2c2, #08979c);">E</div>
-            <div class="model-title-section">
-              <h3 class="model-name">
-                Qwen3-Embedding-8B
-                <span class="model-version">v3.0.0</span>
-              </h3>
-              <p class="model-provider">阿里云</p>
-            </div>
-          </div>
-          <p class="model-description">Qwen3-Embedding-8B是专为文本嵌入任务优化的模型，能够生成高质量的文本向量表示。</p>
-          <div class="model-capabilities">
-            <span class="capability-tag">文本嵌入</span>
-            <span class="capability-tag">语义搜索</span>
-            <span class="capability-tag">相似度计算</span>
-            <span class="capability-tag">RAG</span>
-          </div>
-        </article>
-
-        <article class="model-card" data-model="qwen3-reranker-8b" data-context="8">
-          <div class="model-card-header">
-            <div class="model-icon-placeholder" style="background: linear-gradient(135deg, #fa8c16, #d46b08);">R</div>
-            <div class="model-title-section">
-              <h3 class="model-name">
-                Qwen3-Reranker-8B
-                <span class="model-version">v3.0.0</span>
-              </h3>
-              <p class="model-provider">阿里云</p>
-            </div>
-          </div>
-          <p class="model-description">Qwen3-Reranker-8B是专为重排序任务设计的模型，能够对候选文档进行精准的相关性排序。</p>
-          <div class="model-capabilities">
-            <span class="capability-tag">重排序</span>
-            <span class="capability-tag">相关性排序</span>
-            <span class="capability-tag">搜索优化</span>
-            <span class="capability-tag">语义匹配</span>
-          </div>
-        </article>
       </section>
     </main>
 
@@ -969,48 +929,6 @@
           modelId: 'deepseek-ai/DeepSeek-R1-Distill-Llama-70B',
           endpoint: '/v1/chat/completions',
           containerName: 'openeuler-vllm-deepseek'
-        },
-        'qwen3-embedding-8b': {
-          name: 'Qwen3-Embedding-8B',
-          provider: '阿里云',
-          version: 'v3.0.0',
-          description: 'Qwen3-Embedding-8B是专为文本嵌入任务优化的模型，能够生成高质量的文本向量表示，适用于语义搜索、文本相似度计算和RAG检索增强生成等场景。',
-          capabilities: ['文本嵌入', '语义搜索', '相似度计算', 'RAG'],
-          context: '8K tokens',
-          contextNum: 8,
-          releaseDate: '2026-04-10',
-          status: '已接入',
-          licenseRegion: '浙江省杭州市',
-          licenseName: '通义千问',
-          licenseOrg: '阿里云计算有限公司',
-          licenseNo: 'Zhejiang-Tongyi-20250410',
-          licenseDate: '2025/4/10',
-          docUrl: 'api_reference.html',
-          apiUrl: 'http://220.196.22.85:8003/v1',
-          modelId: 'Qwen/Qwen3-Embedding-8B',
-          endpoint: '/v1/embeddings',
-          containerName: 'openeuler-vllm-Qwen3-Embedding'
-        },
-        'qwen3-reranker-8b': {
-          name: 'Qwen3-Reranker-8B',
-          provider: '阿里云',
-          version: 'v3.0.0',
-          description: 'Qwen3-Reranker-8B是专为重排序任务设计的模型，能够对候选文档进行精准的相关性排序，显著提升搜索结果的准确性和用户体验。',
-          capabilities: ['重排序', '相关性排序', '搜索优化', '语义匹配'],
-          context: '8K tokens',
-          contextNum: 8,
-          releaseDate: '2026-04-12',
-          status: '已接入',
-          licenseRegion: '浙江省杭州市',
-          licenseName: '通义千问',
-          licenseOrg: '阿里云计算有限公司',
-          licenseNo: 'Zhejiang-Tongyi-20250412',
-          licenseDate: '2025/4/12',
-          docUrl: 'api_reference.html',
-          apiUrl: 'http://220.196.22.85:8004/v1',
-          modelId: 'Qwen/Qwen3-Reranker-8B',
-          endpoint: '/v1/rerank',
-          containerName: 'openeuler-vllm-Qwen3-Reranker'
         }
       };
 
@@ -1032,20 +950,89 @@
             document.getElementById('modalContext').textContent = data.context;
             document.getElementById('modalReleaseDate').textContent = data.releaseDate;
             document.getElementById('modalStatus').textContent = data.status;
-            
-            // API info
-            document.getElementById('modalApiUrl').textContent = data.apiUrl;
-            document.getElementById('modalModelId').textContent = data.modelId;
-            document.getElementById('modalEndpoint').textContent = data.endpoint;
-            document.getElementById('modalContainerName').textContent = data.containerName || '-';
-            document.getElementById('modalContainerRow').style.display = data.containerName ? 'flex' : 'none';
-            
-            // License info
-            document.getElementById('modalLicenseRegion').textContent = data.licenseRegion;
-            document.getElementById('modalLicenseName').textContent = data.licenseName;
-            document.getElementById('modalLicenseOrg').textContent = data.licenseOrg;
-            document.getElementById('modalLicenseNo').textContent = data.licenseNo;
-            document.getElementById('modalLicenseDate').textContent = data.licenseDate;
+
+            // API info - hide empty fields
+            const apiUrlEl = document.getElementById('modalApiUrl');
+            const apiUrlRow = apiUrlEl.closest('.license-row');
+            if (data.apiUrl) {
+              apiUrlEl.textContent = data.apiUrl;
+              apiUrlRow.style.display = 'flex';
+            } else {
+              apiUrlRow.style.display = 'none';
+            }
+
+            const modelIdEl = document.getElementById('modalModelId');
+            const modelIdRow = modelIdEl.closest('.license-row');
+            if (data.modelId) {
+              modelIdEl.textContent = data.modelId;
+              modelIdRow.style.display = 'flex';
+            } else {
+              modelIdRow.style.display = 'none';
+            }
+
+            const endpointEl = document.getElementById('modalEndpoint');
+            const endpointRow = endpointEl.closest('.license-row');
+            if (data.endpoint) {
+              endpointEl.textContent = data.endpoint;
+              endpointRow.style.display = 'flex';
+            } else {
+              endpointRow.style.display = 'none';
+            }
+
+            const containerNameEl = document.getElementById('modalContainerName');
+            const containerRow = document.getElementById('modalContainerRow');
+            if (data.containerName) {
+              containerNameEl.textContent = data.containerName;
+              containerRow.style.display = 'flex';
+            } else {
+              containerRow.style.display = 'none';
+            }
+
+            // License info - hide empty fields
+            const licenseRegionEl = document.getElementById('modalLicenseRegion');
+            const licenseRegionRow = licenseRegionEl.closest('.license-row');
+            if (data.licenseRegion) {
+              licenseRegionEl.textContent = data.licenseRegion;
+              licenseRegionRow.style.display = 'flex';
+            } else {
+              licenseRegionRow.style.display = 'none';
+            }
+
+            const licenseNameEl = document.getElementById('modalLicenseName');
+            const licenseNameRow = licenseNameEl.closest('.license-row');
+            if (data.licenseName) {
+              licenseNameEl.textContent = data.licenseName;
+              licenseNameRow.style.display = 'flex';
+            } else {
+              licenseNameRow.style.display = 'none';
+            }
+
+            const licenseOrgEl = document.getElementById('modalLicenseOrg');
+            const licenseOrgRow = licenseOrgEl.closest('.license-row');
+            if (data.licenseOrg) {
+              licenseOrgEl.textContent = data.licenseOrg;
+              licenseOrgRow.style.display = 'flex';
+            } else {
+              licenseOrgRow.style.display = 'none';
+            }
+
+            const licenseNoEl = document.getElementById('modalLicenseNo');
+            const licenseNoRow = licenseNoEl.closest('.license-row');
+            if (data.licenseNo) {
+              licenseNoEl.textContent = data.licenseNo;
+              licenseNoRow.style.display = 'flex';
+            } else {
+              licenseNoRow.style.display = 'none';
+            }
+
+            const licenseDateEl = document.getElementById('modalLicenseDate');
+            const licenseDateRow = licenseDateEl.closest('.license-row');
+            if (data.licenseDate) {
+              licenseDateEl.textContent = data.licenseDate;
+              licenseDateRow.style.display = 'flex';
+            } else {
+              licenseDateRow.style.display = 'none';
+            }
 
             const capabilitiesContainer = document.getElementById('modalCapabilities');
             capabilitiesContainer.innerHTML = data.capabilities.map(cap => 
