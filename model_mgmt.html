@@ -714,10 +714,7 @@
           <div class="model-card-header">
             <img src="Tongyi.svg" alt="Qwen" class="model-icon" style="width: 48px; height: 48px; border-radius: 12px; object-fit: contain;">
             <div class="model-title-section">
-              <h3 class="model-name">
-                Qwen3-14B
-                <span class="model-version">v3.0.0</span>
-              </h3>
+              <h3 class="model-name">Qwen3-14B</h3>
               <p class="model-provider">阿里云</p>
             </div>
           </div>
@@ -731,10 +728,7 @@
           <div class="model-card-header">
             <img src="zhipu.svg" alt="GLM" class="model-icon" style="width: 48px; height: 48px; border-radius: 12px; object-fit: contain;">
             <div class="model-title-section">
-              <h3 class="model-name">
-                GLM-4.1V-9B-Thinking
-                <span class="model-version">v4.1.0</span>
-              </h3>
+              <h3 class="model-name">GLM-4.1V-9B-Thinking</h3>
               <p class="model-provider">智谱AI</p>
             </div>
           </div>
@@ -748,10 +742,7 @@
           <div class="model-card-header">
             <img src="DeepSeek.svg" alt="DeepSeek" class="model-icon" style="width: 48px; height: 48px; border-radius: 12px; object-fit: contain;">
             <div class="model-title-section">
-              <h3 class="model-name">
-                DeepSeek-R1-Distill-Llama-70B
-                <span class="model-version">v1.0.0</span>
-              </h3>
+              <h3 class="model-name">DeepSeek-R1-Distill-Llama-70B</h3>
               <p class="model-provider">DeepSeek</p>
             </div>
           </div>
@@ -785,20 +776,12 @@
             <p class="info-label">基础信息</p>
             <div class="info-grid">
               <div class="info-item">
-                <p class="info-item-label">版本</p>
-                <p class="info-item-value" id="modalVersion">-</p>
-              </div>
-              <div class="info-item">
                 <p class="info-item-label">上下文长度</p>
                 <p class="info-item-value" id="modalContext">-</p>
               </div>
               <div class="info-item">
                 <p class="info-item-label">发布日期</p>
                 <p class="info-item-value" id="modalReleaseDate">-</p>
-              </div>
-              <div class="info-item">
-                <p class="info-item-label">接入状态</p>
-                <p class="info-item-value" id="modalStatus">-</p>
               </div>
             </div>
           </div>
@@ -937,10 +920,8 @@
             document.getElementById('modalTitle').textContent = data.name;
             document.getElementById('modalSubtitle').textContent = data.provider;
             document.getElementById('modalDescription').textContent = data.description;
-            document.getElementById('modalVersion').textContent = data.version;
             document.getElementById('modalContext').textContent = data.context;
             document.getElementById('modalReleaseDate').textContent = data.releaseDate;
-            document.getElementById('modalStatus').textContent = data.status;
 
             // License info - hide empty fields
             const licenseRegionEl = document.getElementById('modalLicenseRegion');
