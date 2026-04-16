@@ -721,16 +721,13 @@
               <p class="model-provider">阿里云</p>
             </div>
           </div>
-          <p class="model-description">Qwen3-14B是阿里云通义千问系列的中等规模语言模型，具备强大的多语言理解和生成能力，支持128K长上下文。</p>
+          <p class="model-description">Qwen3-14B 是通义千问系列的最新大语言模型，拥有 14.8B 参数量。支持思考模式和非思考模式无缝切换，在数学、代码生成和常识逻辑推理上表现优异。</p>
           <div class="model-capabilities">
             <span class="capability-tag">对话</span>
-            <span class="capability-tag">推理</span>
-            <span class="capability-tag">代码生成</span>
-            <span class="capability-tag">数学计算</span>
           </div>
         </article>
 
-        <article class="model-card" data-model="glm-4.1v-9b" data-context="32">
+        <article class="model-card" data-model="glm-4.1v-9b" data-context="64">
           <div class="model-card-header">
             <div class="model-icon-placeholder" style="background: linear-gradient(135deg, #52c41a, #389e0d);">G</div>
             <div class="model-title-section">
@@ -741,12 +738,9 @@
               <p class="model-provider">智谱AI</p>
             </div>
           </div>
-          <p class="model-description">GLM-4.1V-9B-Thinking是智谱AI推出的多模态推理模型，具备强大的视觉理解能力和深度思考能力。</p>
+          <p class="model-description">GLM-4.1V-9B-Thinking 是由智谱 AI 和清华大学联合发布的开源视觉语言模型，通过思维链推理机制显著提升跨模态推理能力。</p>
           <div class="model-capabilities">
-            <span class="capability-tag">多模态</span>
-            <span class="capability-tag">视觉理解</span>
-            <span class="capability-tag">图文推理</span>
-            <span class="capability-tag">深度思考</span>
+            <span class="capability-tag">对话</span>
           </div>
         </article>
 
@@ -761,12 +755,9 @@
               <p class="model-provider">DeepSeek</p>
             </div>
           </div>
-          <p class="model-description">DeepSeek-R1-Distill-Llama-70B是基于Llama3架构的蒸馏大模型，继承了DeepSeek-R1的强大推理能力。</p>
+          <p class="model-description">DeepSeek-R1-Distill-Llama-70B 是深度求索推出的高性能稠密大语言模型，通过知识蒸馏优化，聚焦强化数学运算、代码开发等高阶推理能力。</p>
           <div class="model-capabilities">
-            <span class="capability-tag">推理</span>
-            <span class="capability-tag">数学计算</span>
-            <span class="capability-tag">代码生成</span>
-            <span class="capability-tag">逻辑分析</span>
+            <span class="capability-tag">对话</span>
           </div>
         </article>
 
@@ -920,17 +911,17 @@
           name: 'Qwen3-14B',
           provider: '阿里云',
           version: 'v3.0.0',
-          description: 'Qwen3-14B是阿里云通义千问系列的中等规模语言模型，具备强大的多语言理解和生成能力，支持128K长上下文，在推理、代码生成和数学计算方面表现优异。',
-          capabilities: ['对话', '推理', '代码生成', '数学计算'],
+          description: 'Qwen3-14B 是通义千问系列的最新大语言模型，拥有 14.8B 参数量。该模型独特地支持在思考模式（适用于复杂逻辑推理、数学和编程）和非思考模式（适用于高效的通用对话）之间无缝切换，显著增强了推理能力。模型在数学、代码生成和常识逻辑推理上表现优异，并在创意写作、角色扮演和多轮对话等方面展现出卓越的人类偏好对齐能力。此外，该模型支持 100 多种语言和方言，具备出色的多语言指令遵循和翻译能力。',
+          capabilities: ['对话'],
           context: '128K tokens',
           contextNum: 128,
-          releaseDate: '2026-04-01',
+          releaseDate: '2025-04-29',
           status: '已接入',
-          licenseRegion: '浙江省杭州市',
-          licenseName: '通义千问',
-          licenseOrg: '阿里云计算有限公司',
-          licenseNo: 'Zhejiang-Tongyi-20250401',
-          licenseDate: '2025/4/1',
+          licenseRegion: '浙江省',
+          licenseName: '通义千问大模型',
+          licenseOrg: '阿里巴巴达摩院（杭州）科技有限公司',
+          licenseNo: 'ZheJiang-TongYiQianWen-20230901',
+          licenseDate: '2023/9/12',
           docUrl: 'api_reference.html',
           apiUrl: 'http://220.196.22.85:8000/v1',
           modelId: 'Qwen/Qwen3-14B',
@@ -941,20 +932,20 @@
           name: 'GLM-4.1V-9B-Thinking',
           provider: '智谱AI',
           version: 'v4.1.0',
-          description: 'GLM-4.1V-9B-Thinking是智谱AI推出的多模态推理模型，具备强大的视觉理解能力和深度思考能力，支持图像问答、图文理解和复杂推理任务。',
-          capabilities: ['多模态', '视觉理解', '图文推理', '深度思考'],
-          context: '32K tokens',
-          contextNum: 32,
-          releaseDate: '2026-04-05',
+          description: 'GLM-4.1V-9B-Thinking 是由智谱 AI 和清华大学 KEG 实验室联合发布的一款开源视觉语言模型（VLM），专为处理复杂的多模态认知任务而设计。该模型基于 GLM-4-9B-0414 基础模型，通过引入"思维链"（Chain-of-Thought）推理机制和采用强化学习策略，显著提升了其跨模态的推理能力和稳定性。作为一个 9B 参数规模的轻量级模型，它在部署效率和性能之间取得了平衡，在 28 项权威评测基准中，有 18 项的表现持平甚至超越了 72B 参数规模的 Qwen-2.5-VL-72B。该模型不仅在图文理解、数学科学推理、视频理解等任务上表现卓越，还支持高达 4K 分辨率的图像和任意宽高比输入。',
+          capabilities: ['对话'],
+          context: '64K tokens',
+          contextNum: 64,
+          releaseDate: '2025-07-02',
           status: '已接入',
           licenseRegion: '北京市',
-          licenseName: '智谱清言(GLM)',
+          licenseName: '智谱清言（ChatGLM）',
           licenseOrg: '北京智谱华章科技有限公司',
-          licenseNo: 'Beijing-GLM-20250405',
-          licenseDate: '2025/4/5',
+          licenseNo: 'Beijing-ChatGLM-20230821',
+          licenseDate: '2023/8/31',
           docUrl: 'api_reference.html',
           apiUrl: 'http://220.196.22.85:8001/v1',
-          modelId: 'ZhipuAI/GLM-4.1V-9B-Thinking',
+          modelId: 'THUDM/GLM-4.1V-9B-Thinking',
           endpoint: '/v1/chat/completions',
           containerName: 'openeuler-vllm-GLMvl'
         },
@@ -962,17 +953,17 @@
           name: 'DeepSeek-R1-Distill-Llama-70B',
           provider: 'DeepSeek',
           version: 'v1.0.0',
-          description: 'DeepSeek-R1-Distill-Llama-70B是基于Llama3架构的蒸馏大模型，继承了DeepSeek-R1的强大推理能力，在数学、代码和逻辑推理任务上表现卓越。',
-          capabilities: ['推理', '数学计算', '代码生成', '逻辑分析'],
+          description: 'DeepSeek-R1-Distill-Llama-70B 是深度求索推出的高性能稠密大语言模型，依托 Llama 基座架构，通过对 DeepSeek-R1 超大混合专家模型进行知识蒸馏优化，聚焦强化数学运算、代码开发、复杂逻辑推演等高阶推理能力，支持 128K 超长上下文窗口，可高效处理长文档解析、多步骤复杂任务，模型已完成国内合规备案，开源可商用，兼顾推理性能与本地化部署成本优势。',
+          capabilities: ['对话'],
           context: '128K tokens',
           contextNum: 128,
-          releaseDate: '2026-04-08',
+          releaseDate: '2025-01-20',
           status: '已接入',
           licenseRegion: '北京市',
-          licenseName: 'DeepSeek大模型',
-          licenseOrg: '深度求索科技有限公司',
-          licenseNo: 'Beijing-DeepSeek-20250408',
-          licenseDate: '2025/4/8',
+          licenseName: 'DeepSeek 大语言模型算法',
+          licenseOrg: '北京深度求索人工智能基础技术研究有限公司',
+          licenseNo: 'Beijing-DeepseekChat-202404280016',
+          licenseDate: '2024/5/13',
           docUrl: 'api_reference.html',
           apiUrl: 'http://220.196.22.85:8002/v1',
           modelId: 'deepseek-ai/DeepSeek-R1-Distill-Llama-70B',
