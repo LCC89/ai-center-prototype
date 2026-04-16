@@ -767,7 +767,7 @@
     <div class="modal-overlay" id="modelModal">
       <div class="modal">
         <div class="modal-header">
-          <div class="modal-icon-placeholder"></div>
+          <img src="" alt="" class="modal-icon" id="modalIcon" style="width: 56px; height: 56px; border-radius: 14px; object-fit: contain;">
           <div class="modal-title-section">
             <h2 class="modal-title" id="modalTitle">模型名称</h2>
             <p class="modal-subtitle" id="modalSubtitle">提供商信息</p>
@@ -778,8 +778,9 @@
           <div class="info-section">
             <p class="info-label">模型介绍</p>
             <p class="info-value" id="modalDescription">模型描述内容...</p>
+            <a href="api_reference.html" class="btn btn-primary" id="modalDocLink" target="_blank" rel="noopener noreferrer" style="margin-top: 16px; display: inline-block;">查看 API 接入文档</a>
           </div>
-          
+
           <div class="info-section">
             <p class="info-label">基础信息</p>
             <div class="info-grid">
@@ -859,7 +860,6 @@
         </div>
         <div class="modal-footer">
           <button class="btn btn-secondary" id="modalCloseBtn">关闭</button>
-          <a href="api_reference.html" class="btn btn-primary" id="modalDocLink" target="_blank" rel="noopener noreferrer">查看 API 接入文档</a>
         </div>
       </div>
     </div>
@@ -943,6 +943,19 @@
           const modelId = card.dataset.model;
           const data = modelData[modelId];
           if (data) {
+            // Set modal icon based on model
+            const modalIcon = document.getElementById('modalIcon');
+            if (modelId === 'qwen3-14b') {
+              modalIcon.src = 'Tongyi.svg';
+              modalIcon.alt = 'Qwen';
+            } else if (modelId === 'glm-4.1v-9b') {
+              modalIcon.src = 'zhipu.svg';
+              modalIcon.alt = 'GLM';
+            } else if (modelId === 'deepseek-r1-70b') {
+              modalIcon.src = 'DeepSeek.svg';
+              modalIcon.alt = 'DeepSeek';
+            }
+
             document.getElementById('modalTitle').textContent = data.name;
             document.getElementById('modalSubtitle').textContent = data.provider;
             document.getElementById('modalDescription').textContent = data.description;
