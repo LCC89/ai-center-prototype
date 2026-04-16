@@ -595,41 +595,7 @@
             </div>
 
             <div class="api-section">
-              <h3 class="api-section-title">可用模型</h3>
-              <table class="param-table">
-                <thead>
-                  <tr>
-                    <th>模型名称</th>
-                    <th>模型ID</th>
-                    <th>API URL</th>
-                    <th>上下文长度</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Qwen3-14B</td>
-                    <td><span class="param-type">Qwen/Qwen3-14B</span></td>
-                    <td>http://220.196.22.85:8000/v1</td>
-                    <td>128K tokens</td>
-                  </tr>
-                  <tr>
-                    <td>GLM-4.1V-9B-Thinking</td>
-                    <td><span class="param-type">THUDM/GLM-4.1V-9B-Thinking</span></td>
-                    <td>http://220.196.22.85:8001/v1</td>
-                    <td>64K tokens</td>
-                  </tr>
-                  <tr>
-                    <td>DeepSeek-R1-Distill-Llama-70B</td>
-                    <td><span class="param-type">deepseek-ai/DeepSeek-R1-Distill-Llama-70B</span></td>
-                    <td>http://220.196.22.85:8002/v1</td>
-                    <td>128K tokens</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div class="api-section">
-              <h3 class="api-section-title">请求示例 (Qwen3-14B)</h3>
+              <h3 class="api-section-title">请求示例</h3>
               <div class="code-block">
                 <div class="code-header">
                   <span class="code-language">curl</span>
@@ -642,18 +608,16 @@
                   </button>
                 </div>
                 <div class="code-content">
-                  <pre><code>curl http://220.196.22.85:8000/v1/chat/completions \
+                  <pre><code>curl --request POST \
+  --url https://api.aicenter.com/v1/chat/completions \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -d '{
-    "model": "Qwen/Qwen3-14B",
+    "model": "your-model-id",
     "messages": [
-      {"role": "system", "content": "你是一个 helpful 的 AI 助手"},
-      {"role": "user", "content": "你好，请介绍一下自己"}
-    ],
-    "temperature": 0.7,
-    "max_tokens": 2000,
-    "stream": false
+      {"role": "system", "content": "你是一个有用的助手"},
+      {"role": "user", "content": "你好，请介绍一下你自己"}
+    ]
   }'</code></pre>
                 </div>
               </div>
@@ -673,19 +637,17 @@
                   <pre><code>import requests
 
 response = requests.post(
-    "http://220.196.22.85:8000/v1/chat/completions",
+    "https://api.aicenter.com/v1/chat/completions",
     headers={
         "Content-Type": "application/json",
         "Authorization": "Bearer YOUR_API_KEY"
     },
     json={
-        "model": "Qwen/Qwen3-14B",
+        "model": "your-model-id",
         "messages": [
-            {"role": "system", "content": "你是一个 helpful 的 AI 助手"},
-            {"role": "user", "content": "你好，请介绍一下自己"}
-        ],
-        "temperature": 0.7,
-        "max_tokens": 2000
+            {"role": "system", "content": "你是一个有用的助手"},
+            {"role": "user", "content": "你好，请介绍一下你自己"}
+        ]
     }
 )
 
